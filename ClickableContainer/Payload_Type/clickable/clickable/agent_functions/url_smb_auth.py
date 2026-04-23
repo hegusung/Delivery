@@ -30,7 +30,7 @@ class url_payload(PayloadType):
             name = "url",
             parameter_type=BuildParameterType.String,
             default_value="",
-            description="URL the file will point to",
+            description="responder server the url will point to",
         ),
         BuildParameter(
             name = "icon",

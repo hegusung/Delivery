@@ -34,7 +34,7 @@ class jscript_download_save_execute(PayloadType):
             description="Defines the method to download the payload",
         ),
         BuildParameter(
-            name = "url",
+            name = "downloader_url",
             parameter_type=BuildParameterType.String,
             description="Payload URL",
         ),
@@ -66,7 +66,7 @@ class jscript_download_save_execute(PayloadType):
             strings = []
             payload_args = {}
 
-            url = self.get_parameter('url')
+            url = self.get_parameter('downloader_url')
             path = self.get_parameter('path')
 
             payload = ""

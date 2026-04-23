@@ -24,7 +24,7 @@ class wsf_remote_script(PayloadType):
     agent_code_path = agent_path / "agent_code"
     build_parameters = [
         BuildParameter(
-            name = "url",
+            name = "downloader_url",
             parameter_type=BuildParameterType.String,
             description="Payload URL",
         ),
@@ -60,7 +60,7 @@ class wsf_remote_script(PayloadType):
                 resp.build_stderr = "Unsupported payload"
                 return resp
  
-            url = self.get_parameter('url')
+            url = self.get_parameter('downloader_url')
 
             payload = """<?xml version="1.0" ?>
 <job>

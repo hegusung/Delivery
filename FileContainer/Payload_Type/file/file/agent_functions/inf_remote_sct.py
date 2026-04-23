@@ -27,7 +27,7 @@ class inf_remote_sct(PayloadType):
     agent_code_path = agent_path / "agent_code"
     build_parameters = [
         BuildParameter(
-            name = "url",
+            name = "downloader_url",
             parameter_type=BuildParameterType.String,
             description="Payload URL",
         ),
@@ -69,7 +69,7 @@ class inf_remote_sct(PayloadType):
 
         try:
 
-            url = self.get_parameter('url')
+            url = self.get_parameter('downloader_url')
             defaultinstall_name = self.get_parameter('defaultinstall_name')
             section = self.get_parameter('section_name')
             method = self.get_parameter('method')

