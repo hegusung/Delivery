@@ -21,24 +21,42 @@ All the containers can be installed all at once using the following command:
 
 Currently the following payloads are implemented:
 
+### Binaries
+
+- dotnet_wraps_csharp
+
 ### Scripts
 
-- psh_download_execute_psh
-- psh_shellcode_execution
 - jscript_download_save_execute
 - encoded_script
+- psh_remote_psh
+- psh_wraps_shellcode
+- wsf_remote_script
+- wsf_wraps_script
 
 ### File formats
 
-- cmd_to_lnk
-- script_to_hta
-- script_to_wsf
-- script_to_sct
+- inf_remote_sct
+- inf_wraps_cmd
+- csharp_wraps_shellcode
+- csproj_wraps_shellcode
+- sct_wraps_script
+- sct_remote_script
+- xsl_wraps_script
+- hta_wraps_script
+- lnk_wraps_cmd
+- reg_wraps_cmd
 
 ### LOLBas
 
+- cmd_wraps_powershell
+- lolbas_exec_dotnet
+- lolbas_exec_csproj
+- cmd_advpack_local_inf
+- cmd_cmstp_local_inf
+- cmd_infdefaultinstall_local_inf
 - cmd_regsvr32_remote_sct
-- powershell_to_cmd
+- cmd_setupapi_local_inf
 
 ### Archives
 
@@ -48,4 +66,15 @@ Currently the following payloads are implemented:
 
 - clickfix
 - filefix
+- html_smuggling
+- svg_smuggling
+- clickonce_wraps_csharp
 
+### NetNTLM auth
+
+- lnk_smb_auth
+- scf_smb_auth
+
+### Other
+
+- url_payload
