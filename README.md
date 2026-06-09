@@ -1,4 +1,4 @@
-# MythicInfectionPayloads
+# Delivery
 
 This project works with Mythic C2 and aims to create containers responsible of creating infection chains within Mythic
 
