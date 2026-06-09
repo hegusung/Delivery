@@ -14,7 +14,7 @@ Downloaders currently doesn't exist within mythic, they work my specifying a URL
 All the containers can be installed all at once using the following command:
 
 ```sh
-./install.py --mythic-path /path/to/mythic
+./mythic-cli install github https://github.com/hegusung/
 ``` 
 
 ## Payloads
